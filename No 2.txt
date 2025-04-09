@@ -1,0 +1,11 @@
+
+array i[10]
+for (int index = 0; j<= i.length ; j ++ ){
+  if(i[j] > i[j+1]){
+    int newIndex = j+1;
+   i[newIndex]= i[j+1];
+  System.out.print(i[newIndex] + " ");
+  }else{
+      System.out.print(i[j] + " ");
+  }
+}
