@@ -22,4 +22,6 @@ public class Product extends AuditableEntity{
 	private String name; 
 	@Column(name="quantity", nullable = false)
 	private Integer quantity;
+	@Column(name="price", nullable = false)
+	private Integer price;
 }
