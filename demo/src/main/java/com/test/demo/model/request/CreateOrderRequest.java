@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class CreateProductRequest {
-	private String name;
+public class CreateOrderRequest {
+	private Integer productId;
+	private String trxNumber;
 	private Integer quantity;
-	private Integer price;
+	private String status;
 
 }

@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class CreateProductRequest {
-	private String name;
-	private Integer quantity;
-	private Integer price;
+public class UpdateOrderRequest extends CreateOrderRequest{
+	private int id ;
+	private int version;
+
 
 }

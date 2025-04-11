@@ -12,6 +12,7 @@ import com.test.demo.model.request.UpdateProductRequest;
 import com.test.demo.persistence.entity.Product;
 import com.test.demo.persistence.repository.ProductRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,34 +20,42 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
 	private final ProductRepository repo;
 
-	public void add(CreateProductRequest createProductRequest) {
+	private void setEntity(Product entity, CreateProductRequest request) {
+		entity.setName(request.getName());
+		entity.setQuantity(request.getQuantity());
+		entity.setPrice(request.getPrice());
+	}
+
+	@Transactional
+	public void add(CreateProductRequest request) {
 		Product entity = new Product();
-		entity.setName(createProductRequest.getName());
-		entity.setQuantity(createProductRequest.getQuantity());
+		setEntity(entity, request);
 		repo.save(entity);
 	}
 
-	public void edit(UpdateProductRequest updateProductRequest) {
-		Optional<Product> product = repo.findById(updateProductRequest.getId());
-		if (product.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product tidak ada");
-		}
-		Product entity = new Product();
-		entity.setName(updateProductRequest.getName());
-		entity.setQuantity(updateProductRequest.getQuantity());
-		repo.saveAndFlush(entity);
+	@Transactional
+	public void edit(UpdateProductRequest request) {
+		Product product = getEntityById(request.getId());
+		setEntity(product, request);
+		repo.saveAndFlush(product);
 	}
 
-	public Optional<Product> getEntityById(int id) {
-		return repo.findById(id);
-	}
-
-	public void deleteById(int id) {
+	public Product getEntityById(int id) {
 		Optional<Product> product = repo.findById(id);
 		if (product.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product tidak ada");
 		}
-		repo.delete(product.get());
+		return product.get();
+	}
+
+	@Transactional
+	public void deleteById(int id) {
+		repo.delete(getEntityById(id));
+	}
+
+	@Transactional
+	public void deleteByIds(List<Integer> ids) {
+		ids.stream().forEach(this::deleteById);
 	}
 
 	public List<Product> getAll() {
