@@ -5,9 +5,10 @@ DROP TABLE IF EXISTS t_orders;
 DROP TABLE IF EXISTS  t_products;
 
 CREATE TABLE t_products(
- id int PRIMARY KEY NOT NULL,
+ id SERIAL PRIMARY KEY,
  name TEXT,
  quantity int,
+  price int,
  created_at timestamptz NOT NULL,
  created_by TEXT NOT null,
  updated_at timestamptz NOT null,
@@ -17,11 +18,12 @@ CREATE TABLE t_products(
 );
 
 CREATE TABLE t_orders(
- id int PRIMARY KEY NOT NULL,
+ id SERIAL PRIMARY KEY,
  product_id int NOT NULL,
  trx_number TEXT NOT null,
  trx_date date NOT null,
  quantity int,
+ total_price int,
  created_at timestamptz NOT NULL,
  created_by TEXT NOT null,
  updated_at timestamptz NOT null,

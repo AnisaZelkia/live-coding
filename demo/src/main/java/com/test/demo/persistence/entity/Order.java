@@ -32,6 +32,8 @@ public class Order extends AuditableEntity {
 	private LocalDate trxDate;
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
+	@Column(name = "total_price", nullable = false)
+	private Integer totalPrice;
 	@Column(name = "status", nullable = false)
 	private String status;
 }
