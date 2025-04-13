@@ -36,3 +36,6 @@ spring.jpa.hibernate.ddl-auto=update
 Swagger UI tersedia di:
 
 🌐 http://localhost:8080/swagger-ui.html
+
+
+Spring Doc : https://springdoc.org/#demos
